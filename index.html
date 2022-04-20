@@ -1,0 +1,321 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://unpkg.com/react@17/umd/react.development.js" crossorigin></script>
+    <script src="https://unpkg.com/react-dom@17/umd/react-dom.development.js" crossorigin></script>
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjs/10.4.2/math.js"></script>
+
+    <script src="https://kit.fontawesome.com/4eec790ce9.js" crossorigin="anonymous"></script>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjs/10.4.2/math.js"></script>
+
+
+    <link rel="stylesheet" href="style.css">    
+
+    
+
+    <title>Document</title>
+</head>
+<body>
+
+    <div id="app">
+
+    </div>
+
+
+
+    <script type="text/babel">
+
+
+      class Display extends React.Component{
+        constructor(props){
+          super(props);
+        }
+
+        render(){
+          return(
+            <div className="disp_cont">
+
+              <div className="sub_display">
+                  {this.props.subdisplay}{this.props.operator}
+              </div>
+
+              <div id="display">
+                  {this.props.display}{this.props.operator}
+              </div>
+
+            </div>
+
+          );
+        }
+      }
+
+      class Buttons extends React.Component{
+        constructor(props){
+          super(props);
+        }
+
+        render(){
+          return(
+            <div className="cont_btn">
+
+            <button id="clear" className="btn red ac"
+            onClick={this.props.onClear}>AC</button>
+            <button id="divide" className="btn"
+            onClick={this.props.onOperator}
+            value="/">/</button>
+            <button id="multiply" className="btn"
+            onClick={this.props.onOperator}
+            value="*">x</button>
+
+            <button id="seven" className="btn"
+            onClick={this.props.onNumber}
+            value='7'>7</button>
+            <button id="eight" className="btn"
+            onClick={this.props.onNumber}
+            value='8'>8</button>
+            <button id="nine" className="btn"
+            onClick={this.props.onNumber}
+            value='9'>9</button>
+            <button id="add" className="btn"
+            onClick={this.props.onOperator}
+            value="+">+</button>
+
+            <button id="four" className="btn"
+            onClick={this.props.onNumber}
+            value='4'>4</button>
+            <button id="five" className="btn"
+            onClick={this.props.onNumber}
+            value='5'>5</button>
+            <button id="six" className="btn"
+            onClick={this.props.onNumber}
+            value='6'>6</button>
+            <button id="subtract" className="btn"
+            onClick={this.props.onNegative}
+            value="-">-</button>
+
+            <button id="one" className="btn"
+            onClick={this.props.onNumber}
+            value='1'>1</button>
+            <button id="two" className="btn"
+            onClick={this.props.onNumber}
+            value='2'>2</button>
+            <button id="three" className="btn"
+            onClick={this.props.onNumber}
+            value='3'>3</button>
+            
+            <button id="zero" className="btn zero"
+            onClick={this.props.onNumber}
+            value='0'>0</button>
+            <button id="decimal" className="btn"
+            onClick={this.props.onDot}>.</button>
+            <button id="equals" className="btn blue equal"
+            onClick={this.props.onEqual}>=</button>
+
+          </div>
+
+          );
+        }
+
+      }
+
+      class App extends React.Component{
+        constructor(props){
+          super(props);
+          this.state={
+            display:"0",
+            subdisplay:"",
+            number:"",
+            operator:"",
+            negative:false,
+            decimal:false,
+            result:false
+          }
+          this.onClear = this.onClear.bind(this);
+          this.onNumber = this.onNumber.bind(this);
+          this.onNegative = this.onNegative.bind(this);
+          this.onOperator = this.onOperator.bind(this);
+          this.onDot = this.onDot.bind(this);
+          this.onEqual = this.onEqual.bind(this);
+        }
+
+        onClear(){
+          this.setState({
+            display:"0",
+            subdisplay:"",
+            operator:"",
+            decimal:false,
+            result:false
+          });
+        }
+
+        onNumber(event){
+
+          if(this.state.operator != ""){
+            this.setState({
+              subdisplay:this.state.subdisplay+this.state.operator+event.target.value,
+              display:event.target.value,
+              operator:"",
+              negative:false
+            });
+          }else{
+
+            if (this.state.display == "0" ){
+              this.setState({
+              subdisplay:this.state.subdisplay+this.state.operator+event.target.value,
+              display:event.target.value,
+              operator:"",
+              negative:false
+              });
+            }
+            else if(this.state.result == true){
+              this.setState({
+              subdisplay:event.target.value,
+              display:event.target.value,
+              operator:"",
+              negative:false,
+              result:false
+              });
+            }
+            else{
+              this.setState({
+              subdisplay:this.state.subdisplay+this.state.operator+event.target.value,
+              display:this.state.display+event.target.value,
+              operator:"",
+              negative:false
+              });
+            }
+          }
+
+
+        }
+
+        onOperator(event){
+
+          let operador = event.target.value;
+          
+         if (this.operator != ""){
+
+            if(this.state.subdisplay != ""){
+
+              if(this.state.result){
+
+                this.setState({
+                subdisplay:this.state.display,
+                display:"",
+                operator:operador,
+                decimal:false,
+                negative:false,
+                result:false
+                });
+
+              }else{
+
+                this.setState({
+                display:"",
+                operator:operador,
+                decimal:false,
+                negative:false
+                });
+              }
+
+            }
+         }
+
+        }
+
+        onNegative(event){
+
+          let operador = event.target.value;
+          
+         if (this.operator != ""){
+
+            if(this.state.result){
+
+              this.setState({
+              subdisplay:this.state.display,
+              display:"",
+              operator:operador,
+              decimal:false,
+              negative:false,
+              result:false
+              });
+
+          }else{
+
+            if(this.state.subdisplay != "" && this.state.negative == false){
+              this.setState({
+              display:"",
+              operator:this.state.operator+"-",
+              negative:true,
+              decimal:false
+              });
+            }
+          }
+
+         }
+
+        }
+
+
+
+        onDot(){
+
+          if(!this.state.decimal && this.state.operator == ""){
+
+              this.setState({
+              subdisplay:this.state.subdisplay+".",
+              display:this.state.display+".",
+              decimal:true
+              });
+
+            }
+        }
+
+        onEqual(){
+
+          this.setState({
+            subdisplay:this.state.subdisplay,
+            display:math.evaluate(this.state.subdisplay),
+            operator:"",
+            result:true
+          });
+        }
+
+        render(){
+          return(
+            <div className="container">
+              <Display
+              display={this.state.display}
+              subdisplay={this.state.subdisplay}
+              operator={this.state.operator}
+              />
+              <Buttons
+              onClear={this.onClear}
+              onNumber={this.onNumber}
+              onNegative={this.onNegative}
+              onOperator={this.onOperator}
+              onDot={this.onDot}
+              onEqual={this.onEqual}
+              />
+            </div>
+
+          );
+        }
+      }
+
+      function Hello() {
+        return <h1>Hello World!</h1>;
+      }
+
+      ReactDOM.render(<App />, document.getElementById('app'))
+
+     </script>
+    
+</body>
+</html>

@@ -1,0 +1,83 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@100;300;400;500;700;900&display=swap');
+*{
+    margin:0px;
+    padding:0px;
+    box-sizing: border-box;
+    font-family: 'Roboto', sans-serif;
+}
+
+body{
+    width: 100%;
+    height: 100vh;
+    background-color: #F5F5F5;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+#app{
+    background-color: #BDBDBD;
+    padding: 3px;
+}
+.container{
+    background-color: #BDBDBD;
+    border: 1px solid #BDBDBD;
+    display: grid;
+    grid-template-rows: auto auto;
+}
+.disp_cont{
+
+    display: grid;
+    grid-template-rows: 30px 30px;
+    padding: 5px;
+}
+.sub_display{
+    color: #616161;
+    text-align: end;
+    font-size: 0.8em;
+    padding-bottom: 5px;
+}
+#display{
+    color:#212121;
+    text-align: end;
+    font-size: 1.5em;
+}
+
+.cont_btn{
+    display: grid;
+    grid-template-columns: auto auto auto auto;
+    gap: 2px;
+}
+.btn{
+    font-size: 1.5em;
+    padding: 10px 25px 10px 25px;
+    border-radius: 0;
+    border: 0px solid #BDBDBD;
+    background-color: #FAFAFA;
+}
+.btn:hover{
+    background-color: #9E9E9E;
+    box-shadow: 1px 1px 5px 1px white;
+}
+.zero{
+	grid-column-end: span 2;
+}
+.equal{
+    grid-row: 4/6;
+    grid-column:4/5;
+}
+.ac{
+	grid-column-end: span 2;
+}
+.blue{
+    background-color: #0288D1;
+}
+.blue:hover{
+    background-color: #0277BD;
+}
+.red{
+    background-color: #D32F2F;
+}
+.red:hover{
+    background-color: #C62828;
+}
